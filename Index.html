@@ -389,75 +389,49 @@
         }
         
         function calculateDetailedPayments(salary, loanPath1, loanPath2) {
-            // Path 1 calculations (20%, 25%, 30%)
-            const path1Period1Monthly = salary * 0.20;
-            const path1Period2Monthly = salary * 0.25;
-            const path1Period3Monthly = salary * 0.30;
-            
-            const path1Period1Total = path1Period1Monthly * 12 * 5;
-            const path1Period2Total = path1Period2Monthly * 12 * 5;
-            const path1Period3Total = path1Period3Monthly * 12 * 20;
-            
-            const path1TotalPaid = path1Period1Total + path1Period2Total + path1Period3Total;
-            const path1Interest = path1TotalPaid - loanPath1;
-            
-            // Path 2 calculations (25%, 30%, 35%)
-            const path2Period1Monthly = salary * 0.25;
-            const path2Period2Monthly = salary * 0.30;
-            const path2Period3Monthly = salary * 0.35;
-            
-            const path2Period1Total = path2Period1Monthly * 12 * 5;
-            const path2Period2Total = path2Period2Monthly * 12 * 5;
-            const path2Period3Total = path2Period3Monthly * 12 * 20;
-            
-            const path2TotalPaid = path2Period1Total + path2Period2Total + path2Period3Total;
-            const path2Interest = path2TotalPaid - loanPath2;
-            
-            // Update UI with these calculations
-            document.getElementById('path1-period1').innerHTML = `
-                <p>القسط الشهري: <strong>${path1Period1Monthly.toFixed(2)} دينار</strong></p>
-                <p>إجمالي المدفوع خلال هذه الفترة: <strong>${path1Period1Total.toLocaleString()} دينار</strong></p>
-            `;
-            
-            document.getElementById('path1-period2').innerHTML = `
-                <p>القسط الشهري: <strong>${path1Period2Monthly.toFixed(2)} دينار</strong></p>
-                <p>إجمالي المدفوع خلال هذه الفترة: <strong>${path1Period2Total.toLocaleString()} دينار</strong></p>
-            `;
-            
-            document.getElementById('path1-period3').innerHTML = `
-                <p>القسط الشهري: <strong>${path1Period3Monthly.toFixed(2)} دينار</strong></p>
-                <p>إجمالي المدفوع خلال هذه الفترة: <strong>${path1Period3Total.toLocaleString()} دينار</strong></p>
-            `;
-            
-            document.getElementById('path1-summary').innerHTML = `
-                <p>مبلغ القرض: <strong>${loanPath1.toLocaleString()} دينار</strong></p>
-                <p>إجمالي المدفوع خلال 30 سنة: <strong>${path1TotalPaid.toLocaleString()} دينار</strong></p>
-                <p>إجمالي الفوائد المدفوعة: <strong>${path1Interest.toLocaleString()} دينار</strong></p>
-                <p>نسبة الفائدة الإجمالية: <strong>${((path1Interest / loanPath1) * 100).toFixed(2)}%</strong></p>
-            `;
-            
-            document.getElementById('path2-period1').innerHTML = `
-                <p>القسط الشهري: <strong>${path2Period1Monthly.toFixed(2)} دينار</strong></p>
-                <p>إجمالي المدفوع خلال هذه الفترة: <strong>${path2Period1Total.toLocaleString()} دينار</strong></p>
-            `;
-            
-            document.getElementById('path2-period2').innerHTML = `
-                <p>القسط الشهري: <strong>${path2Period2Monthly.toFixed(2)} دينار</strong></p>
-                <p>إجمالي المدفوع خلال هذه الفترة: <strong>${path2Period2Total.toLocaleString()} دينار</strong></p>
-            `;
-            
-            document.getElementById('path2-period3').innerHTML = `
-                <p>القسط الشهري: <strong>${path2Period3Monthly.toFixed(2)} دينار</strong></p>
-                <p>إجمالي المدفوع خلال هذه الفترة: <strong>${path2Period3Total.toLocaleString()} دينار</strong></p>
-            `;
-            
-            document.getElementById('path2-summary').innerHTML = `
-                <p>مبلغ القرض: <strong>${loanPath2.toLocaleString()} دينار</strong></p>
-                <p>إجمالي المدفوع خلال 30 سنة: <strong>${path2TotalPaid.toLocaleString()} دينار</strong></p>
-                <p>إجمالي الفوائد المدفوعة: <strong>${path2Interest.toLocaleString()} دينار</strong></p>
-                <p>نسبة الفائدة الإجمالية: <strong>${((path2Interest / loanPath2) * 100).toFixed(2)}%</strong></p>
-            `;
-        }
+    // Path 1 calculations (20%, 25%, 30%)
+    const path1Period1Monthly = salary * 0.20;
+    const path1Period2Monthly = salary * 0.25;
+    const path1Period3Monthly = salary * 0.30;
+
+    const path1Period1Total = path1Period1Monthly * 12 * 5;
+    const path1Period2Total = path1Period2Monthly * 12 * 5;
+    const path1Period3Total = path1Period3Monthly * 12 * 20;
+
+    const path1TotalPaid = path1Period1Total + path1Period2Total + path1Period3Total;
+
+    const path1Per1000 = (path1TotalPaid / loanPath1).toFixed(2);
+
+    document.getElementById('path1-period1').textContent = `${path1Period1Monthly.toFixed(2)} دينار × 60 شهر = ${path1Period1Total.toFixed(2)} دينار`;
+    document.getElementById('path1-period2').textContent = `${path1Period2Monthly.toFixed(2)} دينار × 60 شهر = ${path1Period2Total.toFixed(2)} دينار`;
+    document.getElementById('path1-period3').textContent = `${path1Period3Monthly.toFixed(2)} دينار × 240 شهر = ${path1Period3Total.toFixed(2)} دينار`;
+    document.getElementById('path1-summary').innerHTML = `
+        المبلغ الإجمالي المدفوع: ${path1TotalPaid.toLocaleString()} دينار<br>
+        لكل 1000 دينار تمويل، يتم سداد تقريبًا <span class="highlight">${path1Per1000}</span> دينار
+    `;
+
+    // Path 2 calculations (25%, 30%, 35%)
+    const path2Period1Monthly = salary * 0.25;
+    const path2Period2Monthly = salary * 0.30;
+    const path2Period3Monthly = salary * 0.35;
+
+    const path2Period1Total = path2Period1Monthly * 12 * 5;
+    const path2Period2Total = path2Period2Monthly * 12 * 5;
+    const path2Period3Total = path2Period3Monthly * 12 * 20;
+
+    const path2TotalPaid = path2Period1Total + path2Period2Total + path2Period3Total;
+
+    const path2Per1000 = (path2TotalPaid / loanPath2).toFixed(2);
+
+    document.getElementById('path2-period1').textContent = `${path2Period1Monthly.toFixed(2)} دينار × 60 شهر = ${path2Period1Total.toFixed(2)} دينار`;
+    document.getElementById('path2-period2').textContent = `${path2Period2Monthly.toFixed(2)} دينار × 60 شهر = ${path2Period2Total.toFixed(2)} دينار`;
+    document.getElementById('path2-period3').textContent = `${path2Period3Monthly.toFixed(2)} دينار × 240 شهر = ${path2Period3Total.toFixed(2)} دينار`;
+    document.getElementById('path2-summary').innerHTML = `
+        المبلغ الإجمالي المدفوع: ${path2TotalPaid.toLocaleString()} دينار<br>
+        لكل 1000 دينار تمويل، يتم سداد تقريبًا <span class="highlight">${path2Per1000}</span> دينار
+    `;
+}
+
         
         function openTab(evt, tabName) {
             let i, tabcontent, tablinks;
